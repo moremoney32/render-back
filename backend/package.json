@@ -4,7 +4,7 @@
   "description": "backend de l application de restaurant",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "app.js"
   },
   "author": "francklionel",
   "license": "ISC",
