@@ -3,7 +3,6 @@ const axios = require('axios');
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const transporter = require('./helpers/nodermail');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -43,30 +42,13 @@ app.post('/pay', async (req, res) => {
         Donnee3: ""
       }
     };
-    const mailOptions = {
-      from: 'tflkmc1990@gmail.com',
-      to: req.body.email,
-      subject: 'Code de confirmation',
-      text: `Votre code de confirmation est : telecharger votre facture cinetpay`,
-    };
 
     // Effectuez une requête vers CinetPay avec Axios
     const response = await axios.post('https://api-checkout.cinetpay.com/v2/payment', data);
     console.log(response.data);
 
-    // Renvoyez la réponse de CinetPay au frontend
-   // if(response.data){
-      // res.json(response.data);
-      // transporter.sendMail(mailOptions, (error, info) => {
-      //   if (error) {
-      //     res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'e-mail de confirmation' });
-      //   } else {
-      //     res.status(200).json({ message: 'Utilisateur créé avec succès. Vérifiez votre e-mail pour le code de confirmation.'});
-      //   }
-      // });
-      res.json(response.data);
-    //}
-    
+    // Renvoyez la réponse de CinetPay au frontendd
+    res.json(response.data);
   } catch (error) {
     console.error('Erreur lors du paiement :', error);
     res.status(500).json({ error: 'probleme de connexion' });
