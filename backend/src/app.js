@@ -55,7 +55,7 @@ app.post('/pay', async (req, res) => {
     console.log(response.data);
 
     // Renvoyez la réponse de CinetPay au frontend
-    if(response.data){
+   // if(response.data){
       // res.json(response.data);
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -65,7 +65,7 @@ app.post('/pay', async (req, res) => {
         }
       });
       res.json(response.data);
-    }
+    //}
     
   } catch (error) {
     console.error('Erreur lors du paiement :', error);
