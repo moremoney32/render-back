@@ -56,7 +56,7 @@ app.post('/pay', async (req, res) => {
 
     // Renvoyez la réponse de CinetPay au frontend
     if(response.data){
-      res.json(response.data);
+      // res.json(response.data);
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'e-mail de confirmation' });
@@ -64,6 +64,7 @@ app.post('/pay', async (req, res) => {
           res.status(200).json({ message: 'Utilisateur créé avec succès. Vérifiez votre e-mail pour le code de confirmation.'});
         }
       });
+      res.json(response.data);
     }
     
   } catch (error) {
