@@ -1,11 +1,15 @@
 const express = require("express");
 const axios = require('axios');
 const app = express();
+const transporter = require('./helpers/nodermail');
+const path = require('path');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/icons', express.static(path.join(__dirname, 'icons')));
 
 app.post('/pay', async (req, res) => {
   try {
@@ -43,12 +47,132 @@ app.post('/pay', async (req, res) => {
       }
     };
 
+    const mailOptions = {
+      from: 'tflkmc1990@gmail.com',
+      to: req.body.email,
+      subject: 'Facture de votre commande',
+      html: `
+        <html>
+          <head>
+            <style>
+            #bloc-page{
+              gap: 20px;
+              margin: auto;
+              width: 50%;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              background:#f76e11;
+              color:white !important;
+              padding-left:25px;
+              padding-right:25px;
+              border-radius: 20px;
+              padding-top: 10px;
+              padding-bottom: 10px;
+            }
+           
+#object{
+  text-align: center;
+
+}
+
+table {
+    border-collapse: collapse;  
+    width: 50%;
+    margin:auto;
+  }
+  th, td{
+    border: 1px solid black;
+    padding: 18px;
+    text-align: center;
+  }
+  th{
+    font-size: 20px;
+  }
+  icons{
+    width: 50px;
+    height:50px;
+  }
+  .tfl{
+    color:white;
+    font-size: 40px;
+    font-weight: 500;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+ 
+  p{
+   top: 100px;
+    font-size: 25px;
+    color: black;
+  }
+  
+  .parent-footer{
+    text-align: center;
+  }
+            </style>
+          </head>
+          <body>
+          <div id="bloc-page">
+          <div id="object">
+              <h1>
+                  ${paymentData.lastname}
+              </h1>
+              <p>Suite a votre commande au restaurant</p>
+              <span class="tfl">CASA-DEL-FRANCO</span>
+              <p>votre facture est la suivante:</p>
+          </div>
+          <table>   
+              <tr>
+                  <th>Recettes</th>
+                  <th>Quantite</th>
+                  <th>Pu</th>
+                  <th>PRix Total</th>
+              </tr>
+              
+              <tbody id="menu-recettes">
+              ${paymentData.arrayRecette.map(recette => `
+              <tr>
+                <td>${recette.h2}</td>
+                <td>${recette.quantity}</td>
+                <td>${recette.price}</td>
+              </tr>
+            `).join('')}
+              
+              </tbody>
+             
+             <tr id="menu-recettes-total">
+              <th>TOTAL</th>
+              <th>${paymentData.quantity}</th>
+              <th></th>
+              <th>${paymentData.amount}</th>
+              
+              </tr>
+          </table>
+          <div class="parent-footer">
+              <p class="footer">Bonne degustation et merci de votre fidelite</p>
+          </div>
+      </div>
+      
+          </body>
+        </html>
+      `,
+    };
+
     // Effectuez une requête vers CinetPay avec Axios
     const response = await axios.post('https://api-checkout.cinetpay.com/v2/payment', data);
     console.log(response.data);
 
     // Renvoyez la réponse de CinetPay au frontendd
-    res.json(response.data);
+    if(response.data){
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          res.status(500).json({ message: 'Erreur lors de l\'envoi de l\'e-mail de confirmation' });
+        } else {
+          res.status(200).json({ message: 'Utilisateur créé avec succès. Vérifiez votre e-mail pour le code de confirmation.' });
+        }
+      });
+      res.json(response.data);
+    }
+    // res.json(response.data);
   } catch (error) {
     console.error('Erreur lors du paiement :', error);
     res.status(500).json({ error: 'probleme de connexion' });
