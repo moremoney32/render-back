@@ -108,6 +108,65 @@ table {
   .parent-footer{
     text-align: center;
   }
+  @media screen and (max-width:767px) {
+    #bloc-page{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:#f76e11;
+  color: white;
+  padding-left:10px;
+  padding-right:10px;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: auto !important;
+}
+#object{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 70%; 
+   margin: auto;
+ 
+}
+table {
+  border-collapse: collapse;  
+  width: 100%;
+}
+h1{
+  font-size: 25px;
+
+}
+th, td{
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+}
+th{
+  font-size:20px;
+}
+.tfl{
+  color:white;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+p{
+  font-size: 15px;
+  color: black;
+}
+.parent-footer{
+  text-align: center;
+  width: 70%;
+  margin: auto;
+}
+  }
             </style>
           </head>
           <body>
