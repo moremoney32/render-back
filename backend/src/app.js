@@ -112,8 +112,6 @@ table {
 
 #object{
   text-align:center;
-  width:70%; 
-   margin:auto;
  
 }
 table {
