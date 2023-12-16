@@ -111,7 +111,7 @@ table {
   @media screen and (max-width:767px) {
     #bloc-page{
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
   gap: 15px;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
