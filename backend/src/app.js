@@ -109,28 +109,14 @@ table {
     text-align: center;
   }
   @media screen and (max-width:767px) {
-    #bloc-page{
-  display: flex;
-  flex-direction:column;
-  gap: 15px;
-  width: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background:#f76e11;
-  color: white;
-  padding-left:10px;
-  padding-right:10px;
-  border-radius: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin: auto !important;
-}
+
 #object{
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 70%; 
-   margin: auto;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  width:70%; 
+   margin:auto;
  
 }
 table {
