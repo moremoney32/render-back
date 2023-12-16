@@ -112,9 +112,6 @@ table {
 
 #object{
   text-align:center;
-  display:flex;
-  flex-direction:column;
-  gap:15px;
   width:70%; 
    margin:auto;
  
