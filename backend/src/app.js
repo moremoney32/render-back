@@ -176,7 +176,7 @@ p{
                   ${paymentData.lastname}
               </h1>
               <p>Suite a votre commande au restaurant</p>
-              <span class="tfl">CASA-DEL-FRAN</span>
+              <span class="tfl">CASA-DEL-FRANCOO</span>
               <p>votre facture est la suivante:</p>
           </div>
           <table>   
