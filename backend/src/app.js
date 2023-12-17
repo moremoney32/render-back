@@ -111,6 +111,7 @@ table {
   @media screen and (max-width:767px) {
      #bloc-page{
               margin:0;
+              width:fit-content;
             }
 
 #object{
