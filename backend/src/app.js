@@ -5,6 +5,8 @@ const transporter = require('./helpers/nodermail');
 const path = require('path');
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { connectToBaseDonnee } = require("./models/connectToBaseDonnee")
+const { addUser } = require("./services/addUser");
 
 
 app.use(cors());
@@ -35,7 +37,7 @@ app.post('/pay', async (req, res) => {
       customer_country: "CM",
       customer_state: "CM",
       customer_zip_code: "065100",
-      notify_url: "https://webhook.site/d1dbbb89-52c7-49af-a689-b3c412df820d",
+      notify_url: "https://cinetpay.com/notification",
       return_url: "https://webhook.site/d1dbbb89-52c7-49af-a689-b3c412df820d",
       channels: "ALL",
       metadata: "user1",
@@ -214,14 +216,48 @@ p{
           res.status(200).json({ message: 'Utilisateur créé avec succès. Vérifiez votre e-mail pour le code de confirmation.' });
         }
       });
-      res.json(response.data);
+      
+      try {
+        const result = await addUser(paymentData);
+        console.log(result);
+      } catch (error) {
+        console.error('Erreur lors du test d\'ajout d\'utilisateur:', error);
+      }
+     // res.json(response.data);
     }
-    // res.json(response.data);
+    
+     res.json(response.data);
   } catch (error) {
     console.error('Erreur lors du paiement :', error);
     res.status(500).json({ error: 'probleme de connexion' });
   }
 });
+// Gérez les notifications de CinetPay
+app.post('https://cinetpay.com/notification', (req, res) => {
+  const notificationData = req.body;
+  console.log('Notification de CinetPay reçue :', notificationData);
+
+  // Ajoutez votre logique pour traiter la notification (mise à jour de la base de données, envoi de courriels, etc.)
+  // ...
+
+  res.sendStatus(200); // Répondez à CinetPay pour confirmer la réception de la notification
+});
+//recuperation des donnees de la base de donnee
+app.get('/factures', async (req, res) => {
+  try {
+    const db = await connectToBaseDonnee();
+    const collectionName = "facture";
+
+    // Récupérez toutes les données de la collection
+    const data = await db.collection(collectionName).find({}).toArray();
+
+    res.json(data);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données de la base de données:', error);
+    res.status(500).json({ error: 'Erreur lors de la récupération des données de la base de données' });
+  }
+});
+
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Notre app démarre sur le port : http://localhost:${port}`));
