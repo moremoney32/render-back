@@ -3,7 +3,7 @@ const settings =  {
 
     MongoClient:require('mongodb').MongoClient,
 
-    url:"mongodb://127.0.0.1:27017",
+    url:"mongodb+srv://francklionel:franckLionel@cluster0.vte6fpm.mongodb.net/",
 
     dbName:"facture"
 };
