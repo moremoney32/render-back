@@ -7,5 +7,4 @@ const settings =  {
 
     dbName:"facture"
 };
-
 module.exports = settings;
